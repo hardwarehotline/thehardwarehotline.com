@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TheHardwareHotline.com - Book Appointments</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { font-family: 'Inter', sans-serif; background-color:#121212; color:white; }
+  .btn-orange { background-color:#E87042; transition:0.2s; }
+  .btn-orange:hover { background-color:#ff7000; }
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- Header -->
+<header class="bg-gray-900 border-b border-orange-500 sticky top-0 z-10">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+    <h1 class="text-3xl font-bold text-orange-400">TheHardwareHotline.com</h1>
+    <nav class="flex space-x-4">
+      <button onclick="showBookingForm()" class="px-4 py-2 rounded btn-orange font-bold">Book Appointment</button>
+      <button id="viewBtn" onclick="showAppointments()" class="px-4 py-2 rounded btn-orange font-bold hidden">View Appointments</button>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="text-center py-16 bg-black">
+  <h2 class="text-4xl font-extrabold text-orange-400 mb-4">30 Years Experience in PC Repair</h2>
+  <p class="text-gray-300 text-lg max-w-xl mx-auto">We provide free PC diagnostics, free repair labor, free speedups, and build labor. Donate if you want, but it’s optional.</p>
+</section>
+
+<!-- Services -->
+<section class="max-w-4xl mx-auto py-12 px-4">
+  <h3 class="text-3xl font-bold text-orange-400 mb-6">Our Services</h3>
+  <ul class="space-y-3 text-gray-100 text-lg">
+    <li>✅ Free PC Diagnostics</li>
+    <li>✅ Free Repair Labor</li>
+    <li>✅ Free Remote Optimizations</li>
+    <li>✅ Free Computer Speed Up</li>
+    <li>✅ Free Build Labor</li>
+    <li>✅ You only pay for parts if needed</li>
+  </ul>
+</section>
+
+<!-- PayPal Donate -->
+<section class="text-center py-6">
+  <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=blackicerocks82@gmail.com&item_name=Support%20TheHardwareHotline.com" target="_blank"
+     class="px-6 py-3 rounded btn-orange font-bold inline-flex items-center">Donate via PayPal</a>
+</section>
+
+<!-- Booking Form -->
+<section id="bookingSection" class="max-w-3xl mx-auto py-12 px-4 bg-gray-800 rounded-xl mb-12 hidden">
+  <h3 class="text-3xl font-bold text-orange-400 mb-4 text-center">Schedule Drop-Off Time</h3>
+  <form id="bookingForm" class="space-y-4">
+    <input type="text" name="name" placeholder="Your Name" class="w-full p-3 rounded bg-gray-700 text-white" required>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <input type="date" name="date" id="date" class="p-3 rounded bg-gray-700 text-white" required>
+      <select name="time" id="time" class="p-3 rounded bg-gray-700 text-white" required>
+        <option value="">Select a time</option>
+      </select>
+    </div>
+    <textarea name="description" placeholder="Brief description of the issue" class="w-full p-3 rounded bg-gray-700 text-white" required></textarea>
+    <button type="submit" class="w-full py-3 rounded btn-orange font-bold">Submit Appointment</button>
+  </form>
+  <p id="formMsg" class="mt-4 text-center"></p>
+</section>
+
+<!-- Appointments Display -->
+<section id="appointmentsSection" class="max-w-4xl mx-auto py-12 px-4 hidden">
+  <h3 class="text-3xl font-bold text-orange-400 mb-6 text-center">All Appointments</h3>
+  <div id="appointmentsList" class="space-y-4 text-gray-100"></div>
+</section>
+
+<script>
+const SHEET_API = "https://script.google.com/macros/s/AKfycbyfumDpA_y2bpghe78EubBUkOzT2a8UXh9d9hzCkmEv2uHx2HFzedU4sDDYtPUTU1mH/exec";
+const DAILY_SLOTS = ["09:00 AM - 10:00 AM","10:00 AM - 11:00 AM","11:00 AM - 12:00 PM","12:00 PM - 01:00 PM","01:00 PM - 02:00 PM","02:00 PM - 03:00 PM","03:00 PM - 04:00 PM","04:00 PM - 05:00 PM"];
+let appointments = [];
+
+// Elements
+const bookingSection = document.getElementById('bookingSection');
+const appointmentsSection = document.getElementById('appointmentsSection');
+const viewBtn = document.getElementById('viewBtn');
+const bookingForm = document.getElementById('bookingForm');
+const timeSelect = document.getElementById('time');
+const dateInput = document.getElementById('date');
+const formMsg = document.getElementById('formMsg');
+const appointmentsList = document.getElementById('appointmentsList');
+
+// Show/Hide sections
+function showBookingForm(){
+  bookingSection.classList.remove('hidden');
+  appointmentsSection.classList.add('hidden');
+}
+function showAppointments(){
+  bookingSection.classList.add('hidden');
+  appointmentsSection.classList.remove('hidden');
+  renderAppointments();
+}
+
+// Fetch existing appointments
+async function fetchAppointments(){
+  const res = await fetch(SHEET_API);
+  appointments = await res.json();
+  updateTimeSlots();
+  viewBtn.classList.remove('hidden');
+}
+
+// Update available slots
+function updateTimeSlots(){
+  const selectedDate = dateInput.value;
+  timeSelect.innerHTML = '<option value="">Select a time</option>';
+  if(!selectedDate) return;
+  const booked = appointments.filter(a=>a.date===selectedDate).map(a=>a.time);
+  DAILY_SLOTS.forEach(slot=>{
+    const option = document.createElement('option');
+    option.value = slot;
+    option.textContent = slot;
+    if(booked.includes(slot)){
+      option.disabled = true;
+      option.textContent += " (BOOKED)";
+      option.style.backgroundColor = "#8B0000";
+    } else {
+      option.style.backgroundColor = "#228B22";
+    }
+    timeSelect.appendChild(option);
+  });
+}
+
+// Submit new appointment
+bookingForm.addEventListener('submit', async e=>{
+  e.preventDefault();
+  const formData = new FormData(bookingForm);
+  const data = {
+    name: formData.get('name'),
+    date: formData.get('date'),
+    time: formData.get('time'),
+    description: formData.get('description')
+  };
+  if(appointments.some(a=>a.date===data.date && a.time===data.time)){
+    formMsg.textContent = "That slot is already booked!";
+    formMsg.style.color = "red";
+    return;
+  }
+  const res = await fetch(SHEET_API,{method:"POST",body:JSON.stringify(data)});
+  const result = await res.json();
+  if(result.status==="success"){
+    formMsg.textContent = "Appointment booked successfully!";
+    formMsg.style.color = "lightgreen";
+    bookingForm.reset();
+    await fetchAppointments();
+  } else {
+    formMsg.textContent = "Error booking appointment.";
+    formMsg.style.color = "red";
+  }
+});
+
+// Render appointments for admin
+function renderAppointments(){
+  appointmentsList.innerHTML = "";
+  if(appointments.length===0){
+    appointmentsList.innerHTML = "<p>No appointments yet.</p>";
+    return;
+  }
+  appointments.forEach(a=>{
+    const div = document.createElement('div');
+    div.className = "p-4 bg-gray-700 rounded";
+    div.innerHTML = `<strong>${a.name}</strong> - ${a.date} ${a.time}<br>${a.description}`;
+    appointmentsList.appendChild(div);
+  });
+}
+
+// Initialize
+fetchAppointments();
+dateInput.addEventListener('change', updateTimeSlots);
+</script>
+
+</body>
+</html>
