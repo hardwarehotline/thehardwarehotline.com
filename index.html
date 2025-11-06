@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TheHardwareHotline.com: Appointment Tool</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #121212; color: #e0e0e0; }
+        .card { background-color: #1f2937; padding: 1.5rem; border-radius: 1rem; }
+        .disabled-slot { color: #999; }
+    </style>
+</head>
+<body class="min-h-screen">
+
+<header class="bg-gray-800 p-4 text-center text-orange-500 font-bold text-2xl">TheHardwareHotline.com</header>
+
+<main class="max-w-4xl mx-auto p-6">
+
+<section class="card mb-6">
+    <h2 class="text-3xl mb-4">Book a Drop-Off Appointment</h2>
+    <form id="bookingForm" class="space-y-4">
+        <div>
+            <label for="name">First Name:</label>
+            <input type="text" id="name" required class="w-full p-2 rounded bg-gray-700 text-white">
+        </div>
+        <div>
+            <label for="date">Date:</label>
+            <input type="date" id="date" required class="w-full p-2 rounded bg-gray-700 text-white">
+        </div>
+        <div>
+            <label for="time">Time Slot:</label>
+            <select id="time" required class="w-full p-2 rounded bg-gray-700 text-white">
+                <option value="">Select a date first</option>
+            </select>
+        </div>
+        <div>
+            <label for="description">Brief Description:</label>
+            <textarea id="description" rows="3" required class="w-full p-2 rounded bg-gray-700 text-white"></textarea>
+        </div>
+        <button type="submit" class="bg-orange-500 px-4 py-2 rounded font-bold hover:bg-orange-600">Book Appointment</button>
+    </form>
+    <p id="statusMessage" class="mt-4"></p>
+</section>
+
+<section class="card mb-6">
+    <h2 class="text-3xl mb-4">Donate</h2>
+    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=blackicerocks82@gmail.com&item_name=Support%20TheHardwareHotline.com" target="_blank" class="bg-green-600 px-4 py-2 rounded hover:bg-green-700 inline-block">Donate via PayPal</a>
+</section>
+
+</main>
+
+<script>
+// --- Local 'database' of booked appointments ---
+// Update this array manually when a new appointment is booked
+const bookedAppointments = [
+    { date: '2025-11-10', time: '09:00 AM - 10:00 AM' },
+    { date: '2025-11-11', time: '01:00 PM - 02:00 PM' }
+];
+
+const DAILY_SLOTS = [
+    '09:00 AM - 10:00 AM','10:00 AM - 11:00 AM','11:00 AM - 12:00 PM','12:00 PM - 01:00 PM',
+    '01:00 PM - 02:00 PM','02:00 PM - 03:00 PM','03:00 PM - 04:00 PM','04:00 PM - 05:00 PM'
+];
+
+const dateInput = document.getElementById('date');
+const timeSelect = document.getElementById('time');
+const form = document.getElementById('bookingForm');
+const statusMessage = document.getElementById('statusMessage');
+
+function updateTimeSlots() {
+    const selectedDate = dateInput.value;
+    timeSelect.innerHTML = '';
+    if(!selectedDate){
+        timeSelect.innerHTML = '<option value="">Select a date first</option>';
+        return;
+    }
+    DAILY_SLOTS.forEach(slot => {
+        const isBooked = bookedAppointments.some(a => a.date === selectedDate && a.time === slot);
+        const option = document.createElement('option');
+        option.value = slot;
+        option.textContent = slot + (isBooked ? ' (BOOKED)' : '');
+        if(isBooked){ option.disabled = true; option.classList.add('disabled-slot'); }
+        timeSelect.appendChild(option);
+    });
+}
+
+dateInput.addEventListener('change', updateTimeSlots);
+updateTimeSlots();
+
+form.addEventListener('submit', function(e){
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const date = dateInput.value;
+    const time = timeSelect.value;
+    const desc = document.getElementById('description').value.trim();
+
+    if(!name || !date || !time || !desc){
+        statusMessage.textContent = 'Please fill out all fields.';
+        statusMessage.style.color = 'red';
+        return;
+    }
+
+    // Add appointment locally (you must update JSON manually for real storage)
+    bookedAppointments.push({ date, time });
+
+    statusMessage.textContent = `Success! ${name}, your appointment on ${date} at ${time} is booked.`;
+    statusMessage.style.color = 'lightgreen';
+
+    // Reset form
+    form.reset();
+    updateTimeSlots();
+});
+</script>
+
+</body>
+</html>
