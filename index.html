@@ -35,13 +35,9 @@
       <div class="text-2xl font-extrabold text-orange-400">TheHardwareHotline.com</div>
       <div class="text-sm text-gray-400">30 Years Experience</div>
     </div>
-
     <div class="flex items-center space-x-3">
       <button id="bookBtn" class="px-4 py-2 rounded-lg btn-orange font-semibold shadow" onclick="scrollToBooking()">Book Appointment</button>
-
-      <!-- Admin toggle -->
       <button id="adminBtn" class="px-4 py-2 rounded-lg btn-orange font-semibold shadow" onclick="promptAdminKey()">View Appointments</button>
-
       <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=blackicerocks82@gmail.com&item_name=Support%20TheHardwareHotline.com"
          target="_blank"
          class="px-4 py-2 rounded-lg bg-gray-800 border border-orange-700 text-orange-300 font-semibold hover:bg-gray-700 transition">Donate</a>
@@ -68,7 +64,6 @@
           <li>✅ You only pay for parts if needed</li>
           <li>✅ Free Virus Removal</li>
           <li>✅ Free PC Repair</li>
-          <li>✅ Free tacos</li>
         </ul>
       </div>
     </div>
@@ -76,7 +71,6 @@
     <div class="card p-6 rounded-xl shadow-lg">
       <h3 class="text-xl font-bold text-orange-300 mb-4">Quick info</h3>
       <p class="text-gray-300">Drop-off appointment windows are one hour. Times shown as local. We try to respond quickly — thank you for trusting TheHardwareHotline.</p>
-
       <div class="mt-4 text-sm text-gray-400">
         <span class="dot" style="background:var(--orange)"></span> <strong class="text-orange-300">Optional donations</strong> are welcome but never required.
       </div>
@@ -84,7 +78,6 @@
   </div>
 </section>
 
-<!-- BOOKING / APPOINTMENTS WRAPPER -->
 <main class="max-w-5xl mx-auto px-4 pb-20">
 
   <!-- BOOKING CARD -->
@@ -103,7 +96,6 @@
           <label class="block text-sm text-gray-300 mb-1" for="date">Preferred Date</label>
           <input id="date" name="date" required type="date" class="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:border-orange-500" />
         </div>
-
         <div>
           <label class="block text-sm text-gray-300 mb-1" for="time">Preferred Time</label>
           <select id="time" name="time" required class="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:border-orange-500">
@@ -126,18 +118,16 @@
     </form>
   </section>
 
-  <!-- APPOINTMENTS COMPACT BOX -->
+  <!-- COMPACT APPOINTMENTS VIEW -->
   <section class="mt-6">
     <div class="card p-4 rounded-xl shadow-inner">
       <div class="flex items-center justify-between mb-3">
         <h3 class="text-lg font-bold text-orange-300">Upcoming Appointments (quick view)</h3>
         <div class="text-sm text-gray-400">Clients can view other bookings here</div>
       </div>
-
       <div id="compactAppointments" class="max-h-48 overflow-y-auto divide-y divide-gray-700 p-1">
         <p class="text-gray-400">Loading appointments…</p>
       </div>
-
       <div class="mt-3 text-sm text-gray-400">
         <span class="dot" style="background:var(--success)"></span> Available &nbsp;&nbsp;
         <span class="dot" style="background:var(--danger)"></span> Booked
@@ -145,7 +135,7 @@
     </div>
   </section>
 
-  <!-- ADMIN / EXPANDED APPOINTMENTS -->
+  <!-- ADMIN / EXPANDED VIEW -->
   <section id="expandedAppointments" class="card p-4 rounded-xl shadow-xl mt-6 hidden">
     <div class="flex justify-between items-start">
       <h3 class="text-xl font-bold text-orange-300">All Appointments (Detailed)</h3>
@@ -153,7 +143,6 @@
         <button class="px-3 py-2 rounded border border-gray-700 text-gray-200" onclick="closeExpanded()">Close</button>
       </div>
     </div>
-
     <div id="appointmentsBox" class="mt-4 max-h-96 overflow-y-auto divide-y divide-gray-700 p-2"></div>
   </section>
 
@@ -168,15 +157,12 @@
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer class="mt-12 py-8 border-t border-gray-800 text-center text-sm text-gray-400">
   &copy; <span id="year"></span> TheHardwareHotline.com — Data saved to your Google Sheet.
 </footer>
 
-<!-- SCRIPT -->
 <script>
 const SHEET_API = "https://script.google.com/macros/s/AKfycbwz1iUFnyUersgFiuMGCUnCP0STeMsEzI34QHJbQZFARU4IIXRWs6Bqn-FCsCzPmjkPJA/exec";
-  
 const ADMIN_KEY = "42069";
 
 const DAILY_SLOTS = [
@@ -185,7 +171,6 @@ const DAILY_SLOTS = [
 ];
 
 let appointments = [];
-
 const dateInput = document.getElementById('date');
 const timeSelect = document.getElementById('time');
 const bookingForm = document.getElementById('bookingForm');
@@ -197,59 +182,80 @@ const thankModal = document.getElementById('thankModal');
 const yearSpan = document.getElementById('year');
 
 function setMinDateTomorrow(){
-  const t = new Date(); t.setDate(t.getDate()+1);
-  const yyyy = t.getFullYear(); const mm = String(t.getMonth()+1).padStart(2,'0'); const dd = String(t.getDate()).padStart(2,'0');
+  const t = new Date();
+  t.setDate(t.getDate()+1);
+  const yyyy = t.getFullYear();
+  const mm = String(t.getMonth()+1).padStart(2,'0');
+  const dd = String(t.getDate()).padStart(2,'0');
   dateInput.min = `${yyyy}-${mm}-${dd}`;
 }
 setMinDateTomorrow();
-yearSpan.textContent = new Date().getFullYear();
 
-function prettyDate(d){ const dt = new Date(d); if(isNaN(dt)) return d; return dt.toLocaleDateString(); }
+function prettyDate(d){
+  const dt = new Date(d);
+  if(isNaN(dt)) return d;
+  return dt.toLocaleDateString();
+}
 
 async function fetchAppointments(){
-  try{
+  try {
     const res = await fetch(SHEET_API);
     const json = await res.json();
-    appointments = (Array.isArray(json) ? json : []).map(r => ({
-      name: String(r.name || "").trim(),
-      date: String(r.date || "").trim(),
-      time: String(r.time || "").trim(),
-      description: String(r.description || "").trim()
-    }));
-    renderCompactAppointments(); renderExpandedAppointments(); updateTimeSlots();
-  }catch(err){ console.error(err); compactAppointments.innerHTML = '<p class="text-red-500">Could not load appointments.</p>'; }
+    appointments = Array.isArray(json) ? json.map(r=>({
+      name:String(r.name||r.Name||"").trim(),
+      date:String(r.date||r.Date||"").trim(),
+      time:String(r.time||r.Time||"").trim(),
+      description:String(r.description||r.Description||"").trim()
+    })) : [];
+    console.log("Appointments fetched:", appointments);
+    renderCompactAppointments();
+    renderExpandedAppointments();
+    updateTimeSlots();
+  } catch(err){
+    console.error("Failed to fetch appointments:", err);
+    compactAppointments.innerHTML='<p class="text-red-500">Could not load appointments.</p>';
+  }
 }
 
 function renderCompactAppointments(){
-  if(!appointments.length){ compactAppointments.innerHTML='<p class="text-gray-400">No appointments yet — be the first!</p>'; return; }
-  const sorted = appointments.slice().sort((a,b)=> a.date===b.date ? a.time.localeCompare(b.time) : a.date.localeCompare(b.date));
-  compactAppointments.innerHTML='';
+  if(!appointments.length){compactAppointments.innerHTML='<p class="text-gray-400">No appointments yet — be the first!</p>';return;}
+  const sorted = appointments.slice().sort((a,b)=>a.date===b.date?a.time.localeCompare(b.time):a.date.localeCompare(b.date));
+  compactAppointments.innerHTML="";
   sorted.forEach(a=>{
-    const el=document.createElement('div'); el.className='py-2';
+    const el=document.createElement('div');
+    el.className='py-2';
     el.innerHTML=`<div class="flex justify-between items-start">
-      <div><div class="text-sm font-semibold text-orange-300">${a.name||'Client'}</div>
-      <div class="text-xs text-gray-300">${prettyDate(a.date)} • ${a.time}</div>
-      <div class="text-gray-300 mt-1 text-sm">${a.description||''}</div></div></div>`;
+      <div>
+        <div class="text-sm font-semibold text-orange-300">${a.name||'Client'}</div>
+        <div class="text-xs text-gray-300">${prettyDate(a.date)} • ${a.time}</div>
+        <div class="text-gray-300 mt-1 text-sm">${a.description||''}</div>
+      </div>
+    </div>`;
     compactAppointments.appendChild(el);
   });
 }
 
 function renderExpandedAppointments(){
   if(!appointmentsBox) return;
-  appointmentsBox.innerHTML='';
-  if(!appointments.length){ appointmentsBox.innerHTML='<p class="text-gray-400">No appointments yet.</p>'; return; }
-  const grouped = appointments.reduce((acc, ap)=>{ (acc[ap.date]=acc[ap.date]||[]).push(ap); return acc; },{});
+  appointmentsBox.innerHTML="";
+  if(!appointments.length){appointmentsBox.innerHTML='<p class="text-gray-400">No appointments yet.</p>';return;}
+  const grouped = appointments.reduce((acc, ap)=>{(acc[ap.date]=acc[ap.date]||[]).push(ap);return acc;},{});
   Object.keys(grouped).sort().forEach(date=>{
-    const header=document.createElement('div'); header.className='py-3';
-    header.innerHTML=`<div class="text-sm font-bold text-orange-300 mb-2">${prettyDate(date)}</div>`; appointmentsBox.appendChild(header);
+    const header=document.createElement('div');
+    header.className='py-3';
+    header.innerHTML=`<div class="text-sm font-bold text-orange-300 mb-2">${prettyDate(date)}</div>`;
+    appointmentsBox.appendChild(header);
     grouped[date].forEach(ap=>{
-      const card=document.createElement('div'); card.className='p-3 rounded mb-2 bg-black/20';
+      const card=document.createElement('div');
+      card.className='p-3 rounded mb-2 bg-black/20';
       card.innerHTML=`<div class="flex justify-between">
-        <div><div class="text-sm font-semibold text-white">${ap.name||'Client'}</div>
-        <div class="text-xs text-gray-300">${ap.time}</div>
-        <div class="text-gray-300 mt-2">${ap.description||''}</div></div>
-        <div class="text-xs text-gray-400">${prettyDate(date)}</div>
-      </div>`;
+          <div>
+            <div class="text-sm font-semibold text-white">${ap.name||'Client'}</div>
+            <div class="text-xs text-gray-300">${ap.time}</div>
+            <div class="text-gray-300 mt-2">${ap.description||''}</div>
+          </div>
+          <div class="text-xs text-gray-400">${prettyDate(date)}</div>
+        </div>`;
       appointmentsBox.appendChild(card);
     });
   });
@@ -261,90 +267,53 @@ function updateTimeSlots(){
   if(!selectedDate) return;
   const booked = appointments.filter(a=>a.date===selectedDate).map(a=>a.time);
   DAILY_SLOTS.forEach(slot=>{
-    const opt=document.createElement('option'); opt.value=slot;
-    if(booked.includes(slot)){ opt.textContent=`${slot} (BOOKED)`; opt.disabled=true; } 
-    else{ opt.textContent=`${slot} (Available)`; }
+    const opt=document.createElement('option');
+    opt.value=slot;
+    opt.textContent=booked.includes(slot)?`${slot} (BOOKED)`:`${slot} (Available)`;
+    if(booked.includes(slot)) opt.disabled=true;
     timeSelect.appendChild(opt);
   });
 }
 
-bookingForm.addEventListener('submit', async (ev)=>{
+bookingForm.addEventListener('submit',async(ev)=>{
   ev.preventDefault();
-  formFeedback.textContent='';
+  formFeedback.textContent="";
   const name=document.getElementById('name').value.trim();
-  const date=document.getElementById('date').value;
-  const time=document.getElementById('time').value;
+  const date=dateInput.value;
+  const time=timeSelect.value;
   const description=document.getElementById('description').value.trim();
-  if(!name||!date||!time||!description){ formFeedback.textContent="Please fill out all fields."; formFeedback.style.color="tomato"; return; }
-  if(appointments.some(a=>a.date===date&&a.time===time)){ formFeedback.textContent="Sorry — that slot was just booked. Please choose another."; formFeedback.style.color="tomato"; updateTimeSlots(); return; }
+  if(!name||!date||!time||!description){formFeedback.textContent="Please fill out all fields.";formFeedback.style.color="tomato";return;}
+  if(appointments.some(a=>a.date===date&&a.time===time)){formFeedback.textContent="Sorry — that slot was just booked. Please choose another.";formFeedback.style.color="tomato";updateTimeSlots();return;}
   try{
-   
-    const json = await res.json();
-    if(json && json.status==="success"){ formFeedback.textContent="Appointment booked! Thank you."; formFeedback.style.color="lightgreen"; bookingForm.reset(); setTimeout(()=>openThankModal(),300); await fetchAppointments(); } 
-    else{ formFeedback.textContent="There was an error saving your appointment. Please try again."; formFeedback.style.color="tomato"; console.error(json); }
-  }catch(err){ console.error(err); formFeedback.textContent="Network error — could not book appointment."; formFeedback.style.color="tomato"; }
+    const res=await fetch(SHEET_API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name,date,time,description})});
+    const json=await res.json();
+    console.log("POST result:",json);
+    if(json.status==="success"){formFeedback.textContent="Appointment booked! Thank you.";formFeedback.style.color="lightgreen";bookingForm.reset();setTimeout(()=>openThankModal(),300);await fetchAppointments();}
+    else{formFeedback.textContent="There was an error saving your appointment. Please try again.";formFeedback.style.color="tomato";}
+  }catch(err){console.error("POST failed:",err);formFeedback.textContent="Network error — could not book appointment.";formFeedback.style.color="tomato";}
 });
-try {
-  const res = await fetch(SHEET_API, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, date, time, description })
-  });
-
-  console.log("Response status:", res.status);
-  console.log("Response headers:", [...res.headers]);
-
-  let text = await res.text(); 
-  console.log("Raw response text:", text);
-
-  let json;
-  try {
-    json = JSON.parse(text);
-    console.log("Parsed JSON:", json);
-  } catch(err) {
-    console.error("JSON parse error:", err);
-    formFeedback.textContent = "Error parsing server response.";
-    formFeedback.style.color = "tomato";
-    return;
-  }
-
-  if(json && json.status === "success"){
-    formFeedback.textContent = "Appointment booked! Thank you.";
-    formFeedback.style.color = "lightgreen";
-    bookingForm.reset();
-    setTimeout(() => openThankModal(), 300);
-    await fetchAppointments();
-  } else {
-    console.error("POST result:", json);
-    formFeedback.textContent = "There was an error saving your appointment. Check console.";
-    formFeedback.style.color = "tomato";
-  }
-
-} catch (err) {
-  console.error("POST failed", err);
-  formFeedback.textContent = "Network error — could not book appointment. See console.";
-  formFeedback.style.color = "tomato";
-}
 
 function promptAdminKey(){
   const key=prompt("Enter admin key to view detailed appointments (ask owner).");
-  if(key===ADMIN_KEY){ expandedAppointments.classList.remove('hidden'); expandedAppointments.scrollIntoView({behavior:'smooth',block:'start'}); }
-  else if(key!==null){ alert("Invalid key."); }
+  if(key===ADMIN_KEY){expandedAppointments.classList.remove('hidden');expandedAppointments.scrollIntoView({behavior:'smooth',block:'start'});}
+  else if(key!==null) alert("Invalid key.");
 }
 
-function closeExpanded(){ expandedAppointments.classList.add('hidden'); }
-function toggleAppointmentsBox(){ compactAppointments.parentElement.scrollIntoView({behavior:'smooth'}); }
-function openThankModal(){ thankModal.classList.remove('hidden'); }
-function closeThankModal(){ thankModal.classList.add('hidden'); }
-function scrollToBooking(){ document.getElementById('bookingCard').scrollIntoView({behavior:'smooth'}); }
+function closeExpanded(){expandedAppointments.classList.add('hidden');}
+function toggleAppointmentsBox(){compactAppointments.parentElement.scrollIntoView({behavior:'smooth'});}
+function openThankModal(){thankModal.classList.remove('hidden');}
+function closeThankModal(){thankModal.classList.add('hidden');}
+function scrollToBooking(){document.getElementById('bookingCard').scrollIntoView({behavior:'smooth'});}
+yearSpan.textContent=new Date().getFullYear();
 
-(async function init(){ dateInput.addEventListener('change', updateTimeSlots); await fetchAppointments(); })();
+(async function init(){
+  dateInput.addEventListener('change',updateTimeSlots);
+  updateTimeSlots();
+  await fetchAppointments();
+})();
 </script>
 </body>
 </html>
-
-
-
 
 
 
