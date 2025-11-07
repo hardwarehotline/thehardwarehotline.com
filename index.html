@@ -14,10 +14,40 @@
       background-position: center;
       color: #ff914d;
     }
+
     .bg-dark {
       background: rgba(20, 20, 20, 0.8);
       backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 145, 77, 0.5);
+      box-shadow: 0 0 15px rgba(255, 145, 77, 0.2);
     }
+
+    input,
+    textarea,
+    select {
+      border: 1px solid rgba(255, 145, 77, 0.6);
+      box-shadow: 0 0 10px rgba(255, 145, 77, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      box-shadow: 0 0 15px rgba(255, 145, 77, 0.6);
+      border-color: #ff914d;
+    }
+
+    button {
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(255, 145, 77, 0.4);
+    }
+
+    button:hover {
+      box-shadow: 0 0 20px rgba(255, 145, 77, 0.8);
+      transform: scale(1.05);
+    }
+
     input::placeholder,
     textarea::placeholder,
     select:invalid {
@@ -56,10 +86,10 @@
       <h2 class="text-2xl font-bold mb-4 text-orange-400">📅 Schedule a Drop-off Appointment</h2>
       <form id="appointmentForm" class="space-y-4">
         <input type="text" id="name" placeholder="Your Name" required
-          class="w-full p-2 border border-gray-700 rounded-lg bg-gray-900 text-white" />
+          class="w-full p-2 rounded-lg bg-gray-900 text-white" />
         <input type="date" id="date" required placeholder="mm/dd/yyyy"
-          class="w-full p-2 border border-gray-700 rounded-lg bg-gray-900 text-white placeholder-orange-400" />
-        <select id="time" required class="w-full p-2 border border-gray-700 rounded-lg bg-gray-900 text-white">
+          class="w-full p-2 rounded-lg bg-gray-900 text-white placeholder-orange-400" />
+        <select id="time" required class="w-full p-2 rounded-lg bg-gray-900 text-white">
           <option value="">Select Preferred Time</option>
           <option>8AM - 9AM</option>
           <option>9AM - 10AM</option>
@@ -73,9 +103,9 @@
           <option>5PM - 6PM</option>
         </select>
         <textarea id="description" placeholder="Describe your issue..."
-          class="w-full p-2 border border-gray-700 rounded-lg bg-gray-900 text-white" required></textarea>
+          class="w-full p-2 rounded-lg bg-gray-900 text-white" required></textarea>
         <button type="submit"
-          class="w-full bg-orange-500 hover:bg-orange-600 text-black font-bold py-2 rounded-lg transition transform hover:scale-105">
+          class="w-full bg-orange-500 hover:bg-orange-600 text-black font-bold py-2 rounded-lg transition">
           💾 Save Appointment Request
         </button>
       </form>
@@ -97,7 +127,7 @@
         <input type="hidden" name="business" value="blackicerocks82@gmail.com" />
         <input type="hidden" name="currency_code" value="USD" />
         <button type="submit"
-          class="bg-orange-500 text-black font-bold py-3 px-6 rounded-lg hover:shadow-lg hover:bg-orange-600 transition transform hover:scale-105">
+          class="bg-orange-500 text-black font-bold py-3 px-6 rounded-lg hover:shadow-lg hover:bg-orange-600 transition">
           Donate
         </button>
       </form>
@@ -126,7 +156,7 @@
           appointmentsList.innerHTML = "<p>No appointments yet — be the first!</p>";
         } else {
           appointmentsList.innerHTML = json.map(a => `
-            <div class="p-3 border border-gray-700 rounded-lg shadow-sm bg-gray-800 text-white">
+            <div class="p-3 border border-orange-400 rounded-lg shadow-md bg-gray-900">
               <strong class="text-orange-400">${a.name}</strong><br>
               📅 ${a.date} — 🕒 ${a.time}<br>
               💬 ${a.description}
@@ -172,4 +202,3 @@
   </script>
 </body>
 </html>
-
