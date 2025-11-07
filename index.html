@@ -6,6 +6,7 @@
   <title>The Hardware Hotline</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    /* === Glowing Border Animation === */
     @keyframes pulseGlow {
       0% {
         box-shadow: 0 0 10px rgba(255, 145, 77, 0.3), 0 0 20px rgba(255, 145, 77, 0.2);
@@ -21,12 +22,20 @@
       }
     }
 
+    /* === Background shimmer === */
+    @keyframes shimmerBackground {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     body {
-      background: linear-gradient(to bottom right, #111, #1a1a1a);
+      background: linear-gradient(270deg, #0d0d0d, #1a1a1a, #0d0d0d);
       background-image: url('cpuback.png');
       background-size: cover;
       background-attachment: fixed;
       background-position: center;
+      animation: shimmerBackground 20s ease-in-out infinite;
       color: #ff914d;
       overflow-x: hidden;
     }
