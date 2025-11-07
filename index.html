@@ -12,6 +12,7 @@
   <header class="bg-gray-800 text-orange-400 w-full py-6 text-center shadow-md">
     <h1 class="text-3xl font-bold">🛠️ The Hardware Hotline</h1>
     <p class="text-lg mt-2">Free Tech Help & Repairs — Schedule Your Drop-off!</p>
+    <p class="text-sm mt-1 font-semibold text-yellow-400">💡 30 Years of Experience at Your Service!</p>
   </header>
 
   <main class="w-full max-w-3xl p-6 space-y-8">
@@ -65,13 +66,13 @@
     <!-- PayPal Donate Button -->
     <section class="bg-gray-800 rounded-2xl shadow p-6 text-center">
       <h2 class="text-2xl font-bold mb-4 text-orange-400">💖 Support The Hardware Hotline</h2>
-      <p class="mb-4">Donations are optional — any contribution helps keep our free services running. 30 years of experience at your service!</p>
+      <p class="mb-4">Donations are optional — any contribution helps keep our free services running!</p>
       
       <form action="https://www.paypal.com/donate" method="post" target="_top">
         <input type="hidden" name="business" value="blackicerocks82@gmail.com" />
         <input type="hidden" name="currency_code" value="USD" />
         <button type="submit" class="bg-orange-500 text-black font-bold py-3 px-6 rounded-lg hover:shadow-lg hover:scale-105 transition">
-          Donate with PayPal
+          Donate
         </button>
       </form>
     </section>
@@ -83,19 +84,17 @@
   </footer>
 
   <script>
-    // Replace with your live Google Apps Script URL:
     const SHEET_API = "https://script.google.com/macros/s/AKfycbwz1iUFnyUersgFiuMGCUnCP0STeMsEzI34QHJbQZFARU4IIXRWs6Bqn-FCsCzPmjkPJA/exec";
 
     const form = document.getElementById("appointmentForm");
     const responseMessage = document.getElementById("responseMessage");
     const appointmentsList = document.getElementById("appointmentsList");
 
-    // Fetch and display appointments
     async function loadAppointments() {
       appointmentsList.innerHTML = "<p>Loading appointments...</p>";
       try {
         const res = await fetch(SHEET_API);
-        const text = await res.text(); // since Apps Script returns HTML-wrapped JSON
+        const text = await res.text();
         const json = JSON.parse(text.match(/{.*}/s)[0]);
         if (json.length === 0) {
           appointmentsList.innerHTML = "<p>No appointments yet — be the first!</p>";
@@ -113,7 +112,6 @@
       }
     }
 
-    // Handle form submission
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       responseMessage.textContent = "Saving...";
@@ -148,3 +146,6 @@
   </script>
 </body>
 </html>
+
+</html>
+
