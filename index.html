@@ -1,57 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TheHardwareHotline.com — Book Appointments</title>
-
-<!-- Tailwind CSS CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
-
 <style>
-:root {
-  --burnt-orange: #E87042;
-  --burnt-orange-hover: #ff7a3f;
-  --dark-bg: #0f0f10;
-  --card-bg: #1f2937;
-  --muted: #9ca3af;
-  --success: #16a34a;
-  --danger: #b91c1c;
-}
-body { 
-  background: var(--dark-bg); 
-  color: #e6e6e6; 
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; 
-}
-.btn-orange { 
-  background: var(--burnt-orange); 
-  color: white; 
-  transition: 0.2s; 
-  box-shadow: 0 0 5px var(--burnt-orange);
-}
-.btn-orange:hover { 
-  background: var(--burnt-orange-hover); 
-  box-shadow: 0 0 12px var(--burnt-orange-hover); 
-}
-.btn-orange:active { 
-  box-shadow: 0 0 3px var(--burnt-orange); 
-  transform: scale(0.98);
-}
-.card { background: var(--card-bg); }
-.dot { display:inline-block; width:10px; height:10px; border-radius:999px; margin-right:8px; vertical-align:middle; }
-
-/* Scrollbar style for appointments box */
-#compactAppointments, #appointmentsBox {
-  scrollbar-width: thin;
-  scrollbar-color: var(--burnt-orange) var(--card-bg);
-}
-#compactAppointments::-webkit-scrollbar, #appointmentsBox::-webkit-scrollbar {
-  width: 6px;
-}
-#compactAppointments::-webkit-scrollbar-thumb, #appointmentsBox::-webkit-scrollbar-thumb {
-  background-color: var(--burnt-orange);
-  border-radius: 3px;
-}
+  :root {
+    --orange: #E87042;
+    --orange-hover: #ff7a3f;
+    --bg: linear-gradient(135deg, #1a1a1a, #2c2c2c);
+    --card: #1f2937;
+    --muted: #9ca3af;
+    --success: #16a34a;
+    --danger: #b91c1c;
+  }
+  body { 
+    background: var(--bg); 
+    color: #e6e6e6; 
+    font-family: Inter, sans-serif; 
+  }
+  .btn-orange { background: var(--orange); color: white; transition: all 0.2s; }
+  .btn-orange:hover { background: var(--orange-hover); transform: scale(1.05); }
+  .card { background: var(--card); }
+  .dot { display:inline-block; width:10px; height:10px; border-radius:999px; margin-right:8px; vertical-align:middle; }
 </style>
 </head>
 <body class="min-h-screen">
@@ -65,8 +37,7 @@ body {
     </div>
     <div class="flex items-center space-x-3">
       <button id="bookBtn" class="px-4 py-2 rounded-lg btn-orange font-semibold shadow" onclick="scrollToBooking()">Book Appointment</button>
-      <button id="adminBtn" class="px-4 py-2 rounded-lg btn-orange font-semibold shadow" onclick="promptAdminKey()">View Appointments</button>
-      <a href="https://www.paypal.com/donate?business=blackicerocks82@gmail.com" target="_blank" 
+      <a href="https://www.paypal.com/donate?hosted_button_id=YOUR_BUTTON_ID" target="_blank"
          class="px-4 py-2 rounded-lg bg-gray-800 border border-orange-700 text-orange-300 font-semibold hover:bg-gray-700 transition">Donate</a>
     </div>
   </div>
@@ -79,51 +50,45 @@ body {
       <h1 class="text-4xl md:text-5xl font-extrabold text-orange-400 leading-tight">Professional Computer Repair <span class="text-white">— For the love of the game</span></h1>
       <p class="mt-4 text-gray-300 text-lg">30 years of hands-on experience repairing, optimizing, and building PCs. Free diagnostics and labor — you only pay for parts if needed. Book a free drop-off appointment below.</p>
 
-      <!-- Services -->
       <div class="mt-8 card p-6 rounded-xl shadow-lg border-l-4 border-orange-600">
-        <h2 class="text-2xl font-bold text-orange-300 mb-3">Services We Offer</h2>
+        <h2 class="text-2xl font-bold text-orange-300 mb-3">Services We Offer (ALL FREE!)</h2>
         <ul class="space-y-2 text-gray-100">
-          <li>✅ Free Desktop & Laptop Diagnostics</li>
-          <li>✅ Free Virus & Malware Removal</li>
-          <li>✅ Free Data Backup & Recovery Help</li>
-          <li>✅ Free Computer Cleaning</li>
-          <li>✅ Free Computer Build Labor (only pay for parts)</li>
-          <li>✅ Free Repair Labor</li>
-          <li>✅ Free Computer Speed Up & Optimizations</li>
+          <li>✅ Free desktop and laptop diagnostics</li>
+          <li>✅ Free virus & malware removal</li>
+          <li>✅ Free data backup and recovery help</li>
+          <li>✅ Free computer cleaning</li>
+          <li>✅ Free computer build labor (only pay for parts)</li>
+          <li>✅ Free repair labor</li>
+          <li>✅ Free computer speed up and optimizations</li>
         </ul>
       </div>
     </div>
 
     <div class="card p-6 rounded-xl shadow-lg">
-      <h3 class="text-xl font-bold text-orange-300 mb-4">Quick info</h3>
+      <h3 class="text-xl font-bold text-orange-300 mb-4">Quick Info</h3>
       <p class="text-gray-300">Drop-off appointment windows are one hour. Times shown as local. We try to respond quickly — thank you for trusting TheHardwareHotline.</p>
-
       <div class="mt-4 text-sm text-gray-400">
-        <span class="dot" style="background:var(--burnt-orange)"></span> <strong class="text-orange-300">Optional donations</strong> are welcome but never required.
+        <span class="dot" style="background:var(--orange)"></span> <strong class="text-orange-300">Optional donations</strong> are welcome but never required.
       </div>
     </div>
   </div>
 </section>
 
-<!-- BOOKING / APPOINTMENTS WRAPPER -->
+<!-- BOOKING CARD -->
 <main class="max-w-5xl mx-auto px-4 pb-20">
-  <!-- BOOKING CARD -->
   <section id="bookingCard" class="card p-6 rounded-2xl shadow-xl">
     <h2 class="text-2xl font-extrabold text-orange-300 mb-3">Schedule a Drop-Off Appointment</h2>
-    <p class="text-gray-300 mb-4">Choose a date (starting tomorrow) and an available time slot. Bookings are saved to the appointment sheet.</p>
-
     <form id="bookingForm" class="space-y-4">
       <div>
         <label class="block text-sm text-gray-300 mb-1" for="name">Your Name</label>
-        <input id="name" name="name" required type="text" placeholder="e.g., John" class="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:border-orange-500" />
+        <input id="name" name="name" required type="text" placeholder="John Doe" class="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:border-orange-500"/>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label class="block text-sm text-gray-300 mb-1" for="date">Preferred Date</label>
-          <input id="date" name="date" required type="date" class="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:border-orange-500" />
+          <input id="date" name="date" required type="date" class="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:border-orange-500"/>
         </div>
-
         <div>
           <label class="block text-sm text-gray-300 mb-1" for="time">Preferred Time</label>
           <select id="time" name="time" required class="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:border-orange-500">
@@ -134,200 +99,111 @@ body {
 
       <div>
         <label class="block text-sm text-gray-300 mb-1" for="description">Brief Description</label>
-        <textarea id="description" name="description" rows="3" required placeholder="e.g., 'PC won't boot' or 'Very slow after update'" class="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:border-orange-500"></textarea>
+        <textarea id="description" name="description" rows="3" required placeholder="PC won't boot, or very slow" class="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:border-orange-500"></textarea>
       </div>
 
       <div class="flex flex-col sm:flex-row gap-3">
-        <button id="submitBtn" class="btn-orange px-5 py-3 rounded-lg font-semibold shadow">Save Appointment Request</button>
-        <button type="button" id="showListBtn" class="px-5 py-3 rounded-lg border border-gray-700 text-gray-300 hover:bg-gray-800" onclick="toggleAppointmentsBox()">Show Appointments</button>
+        <button type="submit" class="btn-orange px-5 py-3 rounded-lg font-semibold shadow">Save Appointment Request</button>
       </div>
 
       <p id="formFeedback" class="mt-3 text-center text-sm"></p>
     </form>
   </section>
-
-  <!-- COMPACT APPOINTMENTS BOX -->
-  <section class="mt-6">
-    <div class="card p-4 rounded-xl shadow-inner">
-      <div class="flex items-center justify-between mb-3">
-        <h3 class="text-lg font-bold text-orange-300">Upcoming Appointments (quick view)</h3>
-        <div class="text-sm text-gray-400">Clients can view other bookings here</div>
-      </div>
-      <div id="compactAppointments" class="max-h-48 overflow-y-auto divide-y divide-gray-700 p-1">
-        <p class="text-gray-400">Loading appointments…</p>
-      </div>
-      <div class="mt-3 text-sm text-gray-400">
-        <span class="dot" style="background:var(--success)"></span> Available &nbsp;&nbsp;
-        <span class="dot" style="background:var(--danger)"></span> Booked
-      </div>
-    </div>
-  </section>
-
-  <!-- EXPANDED APPOINTMENTS FOR ADMIN -->
-  <section id="expandedAppointments" class="card p-4 rounded-xl shadow-xl mt-6 hidden">
-    <div class="flex justify-between items-start">
-      <h3 class="text-xl font-bold text-orange-300">All Appointments (Detailed)</h3>
-      <div>
-        <button class="px-3 py-2 rounded border border-gray-700 text-gray-200" onclick="closeExpanded()">Close</button>
-      </div>
-    </div>
-    <div id="appointmentsBox" class="mt-4 max-h-96 overflow-y-auto divide-y divide-gray-700 p-2"></div>
-  </section>
 </main>
 
-<!-- THANK YOU MODAL -->
-<div id="thankModal" class="fixed inset-0 flex items-center justify-center bg-black/60 hidden z-50">
-  <div class="bg-card p-6 rounded-xl max-w-md w-full text-center">
-    <h4 class="text-2xl font-bold text-orange-300 mb-3">Thanks — Appointment Booked!</h4>
-    <p class="text-gray-200 mb-4">Thank you for scheduling with TheHardwareHotline.com. We'll see you soon!</p>
-    <button class="btn-orange px-4 py-2 rounded" onclick="closeThankModal()">Close</button>
-  </div>
-</div>
-
+<!-- FOOTER -->
 <footer class="mt-12 py-8 border-t border-gray-800 text-center text-sm text-gray-400">
   &copy; <span id="year"></span> TheHardwareHotline.com — Data saved to your Google Sheet.
 </footer>
 
 <script>
-/* CONFIG */
-const SHEET_API = 'https://hardwarehotline-proxy.vercel.app/api/proxy';
-  
-const ADMIN_KEY = "42069";
-const DAILY_SLOTS = [
-  "09:00 AM - 10:00 AM","10:00 AM - 11:00 AM","11:00 AM - 12:00 PM",
-  "12:00 PM - 01:00 PM","01:00 PM - 02:00 PM","02:00 PM - 03:00 PM",
-  "03:00 PM - 04:00 PM","04:00 PM - 05:00 PM"
-];
+const SHEET_PROXY = "https://hardwarehotline-proxy.vercel.app/api/proxy";
+const DAILY_SLOTS = ["09:00 AM - 10:00 AM","10:00 AM - 11:00 AM","11:00 AM - 12:00 PM","12:00 PM - 01:00 PM","01:00 PM - 02:00 PM","02:00 PM - 03:00 PM","03:00 PM - 04:00 PM","04:00 PM - 05:00 PM"];
 
 let appointments = [];
+const dateInput = document.getElementById("date");
+const timeSelect = document.getElementById("time");
+const bookingForm = document.getElementById("bookingForm");
+const formFeedback = document.getElementById("formFeedback");
+const yearSpan = document.getElementById("year");
 
-const dateInput = document.getElementById('date');
-const timeSelect = document.getElementById('time');
-const bookingForm = document.getElementById('bookingForm');
-const formFeedback = document.getElementById('formFeedback');
-const compactAppointments = document.getElementById('compactAppointments');
-const appointmentsBox = document.getElementById('appointmentsBox');
-const expandedAppointments = document.getElementById('expandedAppointments');
-const thankModal = document.getElementById('thankModal');
-const yearSpan = document.getElementById('year');
+yearSpan.textContent = new Date().getFullYear();
 
 function setMinDateTomorrow() {
-  const t = new Date(); t.setDate(t.getDate() + 1);
+  const t = new Date();
+  t.setDate(t.getDate()+1);
   const yyyy = t.getFullYear();
   const mm = String(t.getMonth()+1).padStart(2,'0');
   const dd = String(t.getDate()).padStart(2,'0');
   dateInput.min = `${yyyy}-${mm}-${dd}`;
 }
 setMinDateTomorrow();
-yearSpan.textContent = new Date().getFullYear();
-
-function prettyDate(d){ const dt=new Date(d); return isNaN(dt)?d:dt.toLocaleDateString(); }
 
 async function fetchAppointments(){
   try{
-    const res = await fetch(SHEET_API);
-    const json = await res.json();
-    appointments = (Array.isArray(json)?json:[]).map(r=>({
-      name:String(r.name||r.Name||"").trim(),
-      date:String(r.date||r.Date||"").trim(),
-      time:String(r.time||r.Time||"").trim(),
-      description:String(r.description||r.Description||"").trim()
-    }));
-    renderCompactAppointments();
-    renderExpandedAppointments();
+    const res = await fetch(SHEET_PROXY);
+    appointments = await res.json();
     updateTimeSlots();
-  }catch(err){
-    console.error("Failed to fetch appointments:",err);
-    compactAppointments.innerHTML='<p class="text-red-500">Could not load appointments.</p>';
+  } catch(e){
+    console.error("Failed to fetch appointments:", e);
   }
 }
 
-function renderCompactAppointments(){
-  if(!appointments.length){ compactAppointments.innerHTML='<p class="text-gray-400">No appointments yet — be the first!</p>'; return; }
-  const sorted = appointments.slice().sort((a,b)=>a.date===b.date?a.time.localeCompare(b.time):a.date.localeCompare(b.date));
-  compactAppointments.innerHTML='';
-  sorted.forEach(a=>{
-    const el=document.createElement('div'); el.className='py-2';
-    el.innerHTML=`<div class="flex justify-between items-start">
-      <div>
-        <div class="text-sm font-semibold text-orange-300">${a.name||'Client'}</div>
-        <div class="text-xs text-gray-300">${prettyDate(a.date)} • ${a.time}</div>
-        <div class="text-gray-300 mt-1 text-sm">${a.description||''}</div>
-      </div>
-    </div>`;
-    compactAppointments.appendChild(el);
-  });
-}
-
-function renderExpandedAppointments(){
-  if(!appointmentsBox) return;
-  appointmentsBox.innerHTML='';
-  if(!appointments.length){ appointmentsBox.innerHTML='<p class="text-gray-400">No appointments yet.</p>'; return; }
-  const grouped = appointments.reduce((acc,ap)=>(acc[ap.date]=acc[ap.date]||[]).push(ap),acc={}); 
-  const dates = Object.keys(grouped).sort();
-  dates.forEach(date=>{
-    const header=document.createElement('div'); header.className='py-3';
-    header.innerHTML=`<div class="text-sm font-bold text-orange-300 mb-2">${prettyDate(date)}</div>`;
-    appointmentsBox.appendChild(header);
-    grouped[date].forEach(ap=>{
-      const card=document.createElement('div'); card.className='p-3 rounded mb-2 bg-black/20';
-      card.innerHTML=`<div class="flex justify-between">
-          <div>
-            <div class="text-sm font-semibold text-white">${ap.name||'Client'}</div>
-            <div class="text-xs text-gray-300">${ap.time}</div>
-            <div class="text-gray-300 mt-2">${ap.description||''}</div>
-          </div>
-          <div class="text-xs text-gray-400">${prettyDate(date)}</div>
-        </div>`;
-      appointmentsBox.appendChild(card);
-    });
-  });
-}
-
 function updateTimeSlots(){
-  const selectedDate=dateInput.value;
-  timeSelect.innerHTML='<option value="">Select a time</option>';
+  const selectedDate = dateInput.value;
+  timeSelect.innerHTML = '<option value="">Select a time</option>';
   if(!selectedDate) return;
-  const booked=appointments.filter(a=>a.date===selectedDate).map(a=>a.time);
+  const booked = appointments.filter(a => a.date===selectedDate).map(a=>a.time);
   DAILY_SLOTS.forEach(slot=>{
-    const opt=document.createElement('option'); opt.value=slot;
-    if(booked.includes(slot)){ opt.textContent=`${slot} (BOOKED)`; opt.disabled=true; } 
-    else{ opt.textContent=`${slot} (Available)`; }
+    const opt = document.createElement("option");
+    opt.value=slot;
+    opt.textContent = booked.includes(slot)?`${slot} (BOOKED)`:`${slot} (Available)`;
+    if(booked.includes(slot)) opt.disabled=true;
     timeSelect.appendChild(opt);
   });
 }
 
-bookingForm.addEventListener('submit', async(ev)=>{
-  ev.preventDefault();
+bookingForm.addEventListener("submit", async e=>{
+  e.preventDefault();
   formFeedback.textContent="";
-  const name=document.getElementById('name').value.trim();
-  const date=document.getElementById('date').value;
-  const time=document.getElementById('time').value;
-  const description=document.getElementById('description').value.trim();
-
-  if(!name||!date||!time||!description){ formFeedback.textContent="Please fill out all fields."; formFeedback.style.color="tomato"; return; }
-  if(appointments.some(a=>a.date===date && a.time===time)){ formFeedback.textContent="Sorry — that slot was just booked. Please choose another."; formFeedback.style.color="tomato"; updateTimeSlots(); return; }
-
+  const name = document.getElementById("name").value.trim();
+  const date = dateInput.value;
+  const time = timeSelect.value;
+  const description = document.getElementById("description").value.trim();
+  if(!name || !date || !time || !description){
+    formFeedback.textContent="Please fill out all fields.";
+    formFeedback.style.color="tomato";
+    return;
+  }
   try{
-    const res=await fetch(SHEET_API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name,date,time,description})});
-    const json=await res.json();
-    if(json&&json.status==="success"){
-      formFeedback.textContent="Appointment booked! Thank you."; formFeedback.style.color="lightgreen";
-      bookingForm.reset(); setTimeout(()=>openThankModal(),300);
+    const res = await fetch(SHEET_PROXY,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({name,date,time,description})
+    });
+    const json = await res.json();
+    if(json.status==="success"){
+      formFeedback.textContent="Appointment booked! Thank you.";
+      formFeedback.style.color="lightgreen";
+      bookingForm.reset();
       await fetchAppointments();
-    }else{ formFeedback.textContent="There was an error saving your appointment. Please try again."; formFeedback.style.color="tomato"; console.error("POST result:",json);}
-  }catch(err){ console.error("POST failed",err); formFeedback.textContent="Network error — could not book appointment."; formFeedback.style.color="tomato";}
+    } else {
+      formFeedback.textContent="Error booking appointment. Try again.";
+      formFeedback.style.color="tomato";
+    }
+  }catch(err){
+    console.error("POST failed", err);
+    formFeedback.textContent="Network error — could not book appointment.";
+    formFeedback.style.color="tomato";
+  }
 });
 
-function promptAdminKey(){ const key=prompt("Enter admin key to view detailed appointments."); if(key===ADMIN_KEY){ expandedAppointments.classList.remove('hidden'); expandedAppointments.scrollIntoView({behavior:'smooth',block:'start'});} else{ alert("Wrong key.");}}
-function closeExpanded(){ expandedAppointments.classList.add('hidden'); }
-function toggleAppointmentsBox(){ expandedAppointments.classList.toggle('hidden'); }
-function scrollToBooking(){ document.getElementById('bookingCard').scrollIntoView({behavior:'smooth'});}
-function openThankModal(){ thankModal.classList.remove('hidden'); }
-function closeThankModal(){ thankModal.classList.add('hidden'); }
-dateInput.addEventListener('change',updateTimeSlots);
+dateInput.addEventListener("change", updateTimeSlots);
 fetchAppointments();
+
+function scrollToBooking(){document.getElementById("bookingCard").scrollIntoView({behavior:"smooth"});}
 </script>
+
 </body>
 </html>
 
