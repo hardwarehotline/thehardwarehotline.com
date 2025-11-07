@@ -142,14 +142,6 @@
       <p id="responseMessage" class="mt-3 text-center font-semibold text-white"></p>
     </section>
 
-    <!-- Appointments View -->
-    <section class="shadow-xl p-6 bg-dark">
-      <h2 class="text-2xl font-bold mb-4 text-orange-400">🔍 Upcoming Appointments</h2>
-      <div id="appointmentsList" class="space-y-3 text-gray-200">
-        <p>Loading appointments...</p>
-      </div>
-    </section>
-
     <!-- Donate Button -->
     <section class="shadow-xl p-6 text-center bg-dark">
       <p class="text-gray-200 mb-2">Donations are optional, but always appreciated 💖</p>
@@ -173,29 +165,6 @@
 
     const form = document.getElementById("appointmentForm");
     const responseMessage = document.getElementById("responseMessage");
-    const appointmentsList = document.getElementById("appointmentsList");
-
-    async function loadAppointments() {
-      appointmentsList.innerHTML = "<p>Loading appointments...</p>";
-      try {
-        const res = await fetch(SHEET_API);
-        const text = await res.text();
-        const json = JSON.parse(text.match(/{.*}/s)[0]);
-        if (json.length === 0) {
-          appointmentsList.innerHTML = "<p>No appointments yet — be the first!</p>";
-        } else {
-          appointmentsList.innerHTML = json.map(a => `
-            <div class="p-3 border border-orange-400 rounded-lg bg-gray-900 animate-pulse">
-              <strong class="text-orange-400">${a.name}</strong><br>
-              📅 ${a.date} — 🕒 ${a.time}<br>
-              💬 ${a.description}
-            </div>
-          `).join("");
-        }
-      } catch (err) {
-        appointmentsList.innerHTML = `<p class="text-red-500">Error loading appointments.</p>`;
-      }
-    }
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -217,7 +186,6 @@
         if (json.status === "success") {
           responseMessage.textContent = "✅ Appointment saved successfully!";
           form.reset();
-          loadAppointments();
         } else {
           responseMessage.textContent = "⚠️ " + (json.message || "Error saving appointment.");
         }
@@ -226,8 +194,6 @@
         responseMessage.textContent = "❌ Network error — could not book appointment.";
       }
     });
-
-    loadAppointments();
   </script>
 </body>
 </html>
