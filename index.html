@@ -6,107 +6,123 @@
   <title>The Hardware Hotline</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* Button animations */
-    .btn-animate {
-      transition: all 0.2s ease-in-out;
+    body {
+      background: #0a0a0a;
+      color: #f8f8f8;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      position: relative;
+      overflow-x: hidden;
     }
-    .btn-animate:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(255, 165, 0, 0.6);
+
+    /* Background image layer */
+    .background {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url('cpuback.png') no-repeat center center/cover;
+      z-index: -10;
+      opacity: 0.35;
+      filter: blur(2px);
     }
-    .btn-animate:active {
-      transform: scale(0.97);
-      box-shadow: 0 0 8px rgba(255, 165, 0, 0.4);
+
+    /* Neon orange pulse glow */
+    @keyframes neonPulse {
+      0%, 100% { box-shadow: 0 0 10px #ff6600, 0 0 20px #ff6600; }
+      50% { box-shadow: 0 0 25px #ff751a, 0 0 40px #ff6600; }
+    }
+    .neon-border {
+      border: 2px solid #ff6600;
+      animation: neonPulse 2.5s infinite ease-in-out;
+    }
+
+    /* Placeholder for date input */
+    input[type="date"]::before {
+      color: #ff6600;
+      content: attr(placeholder);
+      position: absolute;
+      left: 12px;
+    }
+    input[type="date"]:focus::before,
+    input[type="date"]:valid::before {
+      content: "";
     }
   </style>
 </head>
-<body class="bg-gray-900 text-orange-400 min-h-screen flex flex-col items-center">
+
+<body class="min-h-screen flex flex-col items-center">
+  <div class="background"></div>
 
   <!-- Header -->
-  <header class="bg-gray-800 text-orange-400 w-full py-6 text-center shadow-md">
-    <h1 class="text-3xl font-bold">🛠️ The Hardware Hotline</h1>
-    <p class="text-lg mt-2">Free Tech Help & Repairs — 30 Years of Experience</p>
+  <header class="w-full text-center py-8 bg-black bg-opacity-60 backdrop-blur-md neon-border">
+    <h1 class="text-4xl font-bold text-orange-400 drop-shadow-lg">🛠️ The Hardware Hotline</h1>
+    <p class="text-lg text-gray-200 mt-2">30 Years of Experience — Free Tech Help & Repairs</p>
   </header>
 
   <main class="w-full max-w-3xl p-6 space-y-8">
 
-    <!-- Donate Button -->
-    <section class="text-center">
-      <form action="https://www.paypal.com/donate" method="post" target="_top" class="inline-block">
+    <!-- Donate Section -->
+    <section class="bg-black bg-opacity-70 p-6 rounded-2xl shadow-md neon-border text-center">
+      <form action="https://www.paypal.com/donate" method="post" target="_top">
         <input type="hidden" name="business" value="blackicerocks82@gmail.com" />
         <input type="hidden" name="currency_code" value="USD" />
         <button type="submit"
-          class="btn-animate bg-orange-500 text-black font-bold py-3 px-6 rounded-lg">
+          class="bg-orange-500 text-black font-bold py-3 px-6 rounded-lg hover:shadow-lg hover:bg-orange-400 transition">
           Donate
         </button>
       </form>
-      <p class="mt-2 text-gray-400 text-sm">Donations are optional</p>
+      <p class="text-gray-300 mt-3 text-sm italic">Donations are optional — all services remain 100% free.</p>
     </section>
 
-    <!-- Services Section -->
-    <section class="bg-gray-800 rounded-2xl shadow p-6">
+    <!-- Services -->
+    <section class="bg-black bg-opacity-70 p-6 rounded-2xl shadow-md neon-border">
       <h2 class="text-2xl font-bold mb-4 text-orange-400">💡 Free Services We Offer</h2>
-      <ul class="list-disc list-inside space-y-2">
+      <ul class="list-disc list-inside space-y-2 text-gray-200">
         <li>🔧 Free Desktop & Laptop Diagnostics</li>
         <li>🖥️ Free Virus & Malware Removal</li>
         <li>💽 Free Data Backup & Recovery Help</li>
-        <li>🧹 Free Computer Cleaning</li>
-        <li>🛠️ Free Computer Build Labor (Only Pay for Parts)</li>
-        <li>🔧 Free Repair Labor</li>
-        <li>⚡ Free Computer Speed Up & Optimizations</li>
+        <li>⚙️ Free Computer Cleaning</li>
+        <li>🧰 Free Computer Build Labor (you only pay for parts)</li>
+        <li>🪛 Free Repair Labor</li>
+        <li>🚀 Free Computer Speed-up & Optimization</li>
       </ul>
     </section>
 
     <!-- Appointment Form -->
-    <section class="bg-gray-800 rounded-2xl shadow p-6">
+    <section class="bg-black bg-opacity-70 p-6 rounded-2xl shadow-md neon-border">
       <h2 class="text-2xl font-bold mb-4 text-orange-400">📅 Schedule a Drop-off Appointment</h2>
-      <form id="appointmentForm" class="space-y-4">
+      <form id="appointmentForm" class="space-y-4 relative">
         <input type="text" id="name" placeholder="Your Name" required
-          class="w-full p-2 border border-orange-400 rounded-lg bg-gray-900 text-orange-400" />
-
-        <!-- Date picker with mobile-friendly placeholder -->
+          class="w-full p-2 border border-gray-700 rounded-lg bg-gray-900 text-white" />
         <div class="relative">
-          <input type="text" id="dateDisplay" placeholder="MM/DD/YYYY" readonly
-            class="w-full p-2 border border-orange-400 rounded-lg bg-gray-900 text-orange-400" />
-          <input type="date" id="date" required
-            class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
-          <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-          </div>
+          <input type="date" id="date" required placeholder="mm/dd/yyyy"
+            class="w-full p-2 border border-gray-700 rounded-lg bg-gray-900 text-white appearance-none" />
         </div>
-
-        <select id="time" required class="w-full p-2 border border-orange-400 rounded-lg bg-gray-900 text-orange-400">
+        <select id="time" required class="w-full p-2 border border-gray-700 rounded-lg bg-gray-900 text-white">
           <option value="">Select Preferred Time</option>
           <option>Morning (9AM - 11AM)</option>
           <option>Midday (11AM - 2PM)</option>
           <option>Afternoon (2PM - 5PM)</option>
         </select>
-
         <textarea id="description" placeholder="Describe your issue..."
-          class="w-full p-2 border border-orange-400 rounded-lg bg-gray-900 text-orange-400" required></textarea>
-
+          class="w-full p-2 border border-gray-700 rounded-lg bg-gray-900 text-white" required></textarea>
         <button type="submit"
-          class="btn-animate w-full bg-orange-500 text-black font-semibold py-2 rounded-lg">
+          class="w-full bg-orange-500 hover:bg-orange-400 text-black font-semibold py-2 rounded-lg transition shadow-md">
           💾 Save Appointment Request
         </button>
       </form>
-      <p id="responseMessage" class="mt-3 text-center font-semibold"></p>
+      <p id="responseMessage" class="mt-3 text-center font-semibold text-orange-400"></p>
     </section>
 
     <!-- Appointments View -->
-    <section class="bg-gray-800 rounded-2xl shadow p-6">
+    <section class="bg-black bg-opacity-70 p-6 rounded-2xl shadow-md neon-border">
       <h2 class="text-2xl font-bold mb-4 text-orange-400">🔍 Upcoming Appointments</h2>
-      <div id="appointmentsList" class="space-y-3 text-orange-400">
+      <div id="appointmentsList" class="space-y-3 text-gray-200">
         <p>Loading appointments...</p>
       </div>
     </section>
   </main>
 
-  <footer class="bg-gray-800 text-orange-400 w-full text-center py-4 mt-auto">
-    <p>© 2025 The Hardware Hotline. All Rights Reserved.</p>
+  <footer class="w-full text-center py-6 mt-auto bg-black bg-opacity-60 neon-border text-gray-400 text-sm">
+    © 2025 The Hardware Hotline. All Rights Reserved.
   </footer>
 
   <script>
@@ -116,70 +132,47 @@
     const responseMessage = document.getElementById("responseMessage");
     const appointmentsList = document.getElementById("appointmentsList");
 
-    const dateInput = document.getElementById("date");
-    const dateDisplay = document.getElementById("dateDisplay");
-
-    function formatDate(date) {
-      const d = new Date(date);
-      const mm = String(d.getMonth() + 1).padStart(2, "0");
-      const dd = String(d.getDate()).padStart(2, "0");
-      const yyyy = d.getFullYear();
-      return `${mm}/${dd}/${yyyy}`;
-    }
-
-    dateInput.addEventListener("input", () => {
-      dateDisplay.value = dateInput.value ? formatDate(dateInput.value) : "";
-    });
-
     async function loadAppointments() {
       appointmentsList.innerHTML = "<p>Loading appointments...</p>";
       try {
         const res = await fetch(SHEET_API);
         const text = await res.text();
         const json = JSON.parse(text.match(/{.*}/s)[0]);
-        if (json.length === 0) {
-          appointmentsList.innerHTML = "<p>No appointments yet — be the first!</p>";
-        } else {
-          appointmentsList.innerHTML = json.map(a => `
-            <div class="p-3 border rounded-lg shadow-sm bg-gray-900">
-              <strong>${a.name}</strong><br>
+        appointmentsList.innerHTML = json.length
+          ? json.map(a => `
+            <div class="p-3 border border-gray-700 rounded-lg bg-gray-900 bg-opacity-70">
+              <strong class="text-orange-400">${a.name}</strong><br>
               📅 ${a.date} — 🕒 ${a.time}<br>
               💬 ${a.description}
-            </div>
-          `).join("");
-        }
-      } catch (err) {
-        appointmentsList.innerHTML = `<p class="text-red-600">Error loading appointments.</p>`;
+            </div>`).join("")
+          : "<p>No appointments yet — be the first!</p>";
+      } catch {
+        appointmentsList.innerHTML = `<p class="text-red-500">Error loading appointments.</p>`;
       }
     }
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       responseMessage.textContent = "Saving...";
-      const formData = {
+      const data = {
         name: document.getElementById("name").value,
-        date: dateInput.value,
+        date: document.getElementById("date").value,
         time: document.getElementById("time").value,
         description: document.getElementById("description").value
       };
 
       try {
-        const res = await fetch(SHEET_API, {
-          method: "POST",
-          body: JSON.stringify(formData)
-        });
+        const res = await fetch(SHEET_API, { method: "POST", body: JSON.stringify(data) });
         const text = await res.text();
         const json = JSON.parse(text.match(/{.*}/s)[0]);
         if (json.status === "success") {
           responseMessage.textContent = "✅ Appointment saved successfully!";
           form.reset();
-          dateDisplay.value = "";
           loadAppointments();
         } else {
           responseMessage.textContent = "⚠️ " + (json.message || "Error saving appointment.");
         }
-      } catch (err) {
-        console.error("POST failed:", err);
+      } catch {
         responseMessage.textContent = "❌ Network error — could not book appointment.";
       }
     });
