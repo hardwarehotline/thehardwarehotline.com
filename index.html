@@ -1,209 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TheHardwareHotline.com — Book Appointments</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-  :root {
-    --orange: #E87042;
-    --orange-hover: #ff7a3f;
-    --bg: linear-gradient(135deg, #1a1a1a, #2c2c2c);
-    --card: #1f2937;
-    --muted: #9ca3af;
-    --success: #16a34a;
-    --danger: #b91c1c;
-  }
-  body { 
-    background: var(--bg); 
-    color: #e6e6e6; 
-    font-family: Inter, sans-serif; 
-  }
-  .btn-orange { background: var(--orange); color: white; transition: all 0.2s; }
-  .btn-orange:hover { background: var(--orange-hover); transform: scale(1.05); }
-  .card { background: var(--card); }
-  .dot { display:inline-block; width:10px; height:10px; border-radius:999px; margin-right:8px; vertical-align:middle; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Hardware Hotline</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="min-h-screen">
+<body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col items-center">
 
-<!-- HEADER -->
-<header class="sticky top-0 z-30 bg-black/70 backdrop-blur border-b border-orange-700">
-  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-    <div class="flex items-center space-x-4">
-      <div class="text-2xl font-extrabold text-orange-400">TheHardwareHotline.com</div>
-      <div class="text-sm text-gray-400">30 Years Experience</div>
-    </div>
-    <div class="flex items-center space-x-3">
-      <button id="bookBtn" class="px-4 py-2 rounded-lg btn-orange font-semibold shadow" onclick="scrollToBooking()">Book Appointment</button>
-      <a href="https://www.paypal.com/donate?hosted_button_id=YOUR_BUTTON_ID" target="_blank"
-         class="px-4 py-2 rounded-lg bg-gray-800 border border-orange-700 text-orange-300 font-semibold hover:bg-gray-700 transition">Donate</a>
-    </div>
-  </div>
-</header>
+  <!-- Header -->
+  <header class="bg-blue-700 text-white w-full py-6 text-center shadow-md">
+    <h1 class="text-3xl font-bold">🛠️ The Hardware Hotline</h1>
+    <p class="text-lg mt-2">Free Tech Help & Repairs — Schedule Your Drop-off!</p>
+  </header>
 
-<!-- HERO -->
-<section class="py-16">
-  <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-10 items-center">
-    <div>
-      <h1 class="text-4xl md:text-5xl font-extrabold text-orange-400 leading-tight">Professional Computer Repair <span class="text-white">— For the love of the game</span></h1>
-      <p class="mt-4 text-gray-300 text-lg">30 years of hands-on experience repairing, optimizing, and building PCs. Free diagnostics and labor — you only pay for parts if needed. Book a free drop-off appointment below.</p>
+  <main class="w-full max-w-3xl p-6 space-y-8">
 
-      <div class="mt-8 card p-6 rounded-xl shadow-lg border-l-4 border-orange-600">
-        <h2 class="text-2xl font-bold text-orange-300 mb-3">Services We Offer (ALL FREE!)</h2>
-        <ul class="space-y-2 text-gray-100">
-          <li>✅ Free desktop and laptop diagnostics</li>
-          <li>✅ Free virus & malware removal</li>
-          <li>✅ Free data backup and recovery help</li>
-          <li>✅ Free computer cleaning</li>
-          <li>✅ Free computer build labor (only pay for parts)</li>
-          <li>✅ Free repair labor</li>
-          <li>✅ Free computer speed up and optimizations</li>
-        </ul>
+    <!-- Services Section -->
+    <section class="bg-white rounded-2xl shadow p-6">
+      <h2 class="text-2xl font-bold mb-4 text-blue-700">💡 Free Services We Offer</h2>
+      <ul class="list-disc list-inside space-y-2">
+        <li>🔧 Computer & Laptop Diagnostics</li>
+        <li>🖥️ Virus & Malware Removal</li>
+        <li>💽 Data Backup & Recovery Help</li>
+        <li>⚙️ Device Tune-ups & Optimization</li>
+        <li>📱 Phone & Tablet Troubleshooting</li>
+        <li>🌐 Wi-Fi and Network Assistance</li>
+        <li>🧰 Basic Electronics Repair Guidance</li>
+      </ul>
+    </section>
+
+    <!-- Appointment Form -->
+    <section class="bg-white rounded-2xl shadow p-6">
+      <h2 class="text-2xl font-bold mb-4 text-blue-700">📅 Schedule a Drop-off Appointment</h2>
+      <form id="appointmentForm" class="space-y-4">
+        <input type="text" id="name" placeholder="Your Name" required
+          class="w-full p-2 border border-gray-300 rounded-lg" />
+        <input type="date" id="date" required
+          class="w-full p-2 border border-gray-300 rounded-lg" />
+        <select id="time" required class="w-full p-2 border border-gray-300 rounded-lg">
+          <option value="">Select Preferred Time</option>
+          <option>Morning (9AM - 11AM)</option>
+          <option>Midday (11AM - 2PM)</option>
+          <option>Afternoon (2PM - 5PM)</option>
+        </select>
+        <textarea id="description" placeholder="Describe your issue..."
+          class="w-full p-2 border border-gray-300 rounded-lg" required></textarea>
+        <button type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition">
+          💾 Save Appointment Request
+        </button>
+      </form>
+      <p id="responseMessage" class="mt-3 text-center font-semibold"></p>
+    </section>
+
+    <!-- Appointments View -->
+    <section class="bg-white rounded-2xl shadow p-6">
+      <h2 class="text-2xl font-bold mb-4 text-blue-700">🔍 Upcoming Appointments</h2>
+      <div id="appointmentsList" class="space-y-3 text-gray-700">
+        <p>Loading appointments...</p>
       </div>
-    </div>
+    </section>
+  </main>
 
-    <div class="card p-6 rounded-xl shadow-lg">
-      <h3 class="text-xl font-bold text-orange-300 mb-4">Quick Info</h3>
-      <p class="text-gray-300">Drop-off appointment windows are one hour. Times shown as local. We try to respond quickly — thank you for trusting TheHardwareHotline.</p>
-      <div class="mt-4 text-sm text-gray-400">
-        <span class="dot" style="background:var(--orange)"></span> <strong class="text-orange-300">Optional donations</strong> are welcome but never required.
-      </div>
-    </div>
-  </div>
-</section>
+  <footer class="bg-blue-700 text-white w-full text-center py-4 mt-auto">
+    <p>© 2025 The Hardware Hotline. All Rights Reserved.</p>
+  </footer>
 
-<!-- BOOKING CARD -->
-<main class="max-w-5xl mx-auto px-4 pb-20">
-  <section id="bookingCard" class="card p-6 rounded-2xl shadow-xl">
-    <h2 class="text-2xl font-extrabold text-orange-300 mb-3">Schedule a Drop-Off Appointment</h2>
-    <form id="bookingForm" class="space-y-4">
-      <div>
-        <label class="block text-sm text-gray-300 mb-1" for="name">Your Name</label>
-        <input id="name" name="name" required type="text" placeholder="John Doe" class="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:border-orange-500"/>
-      </div>
+  <script>
+    // Replace with your live Google Apps Script URL:
+    const SHEET_API = "https://script.google.com/macros/s/AKfycbwz1iUFnyUersgFiuMGCUnCP0STeMsEzI34QHJbQZFARU4IIXRWs6Bqn-FCsCzPmjkPJA/exec";
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label class="block text-sm text-gray-300 mb-1" for="date">Preferred Date</label>
-          <input id="date" name="date" required type="date" class="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:border-orange-500"/>
-        </div>
-        <div>
-          <label class="block text-sm text-gray-300 mb-1" for="time">Preferred Time</label>
-          <select id="time" name="time" required class="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:border-orange-500">
-            <option value="">Select a date first</option>
-          </select>
-        </div>
-      </div>
+    const form = document.getElementById("appointmentForm");
+    const responseMessage = document.getElementById("responseMessage");
+    const appointmentsList = document.getElementById("appointmentsList");
 
-      <div>
-        <label class="block text-sm text-gray-300 mb-1" for="description">Brief Description</label>
-        <textarea id="description" name="description" rows="3" required placeholder="PC won't boot, or very slow" class="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:border-orange-500"></textarea>
-      </div>
-
-      <div class="flex flex-col sm:flex-row gap-3">
-        <button type="submit" class="btn-orange px-5 py-3 rounded-lg font-semibold shadow">Save Appointment Request</button>
-      </div>
-
-      <p id="formFeedback" class="mt-3 text-center text-sm"></p>
-    </form>
-  </section>
-</main>
-
-<!-- FOOTER -->
-<footer class="mt-12 py-8 border-t border-gray-800 text-center text-sm text-gray-400">
-  &copy; <span id="year"></span> TheHardwareHotline.com — Data saved to your Google Sheet.
-</footer>
-
-<script>
-const SHEET_PROXY = "https://hardwarehotline-proxy.vercel.app/api/proxy";
-const DAILY_SLOTS = ["09:00 AM - 10:00 AM","10:00 AM - 11:00 AM","11:00 AM - 12:00 PM","12:00 PM - 01:00 PM","01:00 PM - 02:00 PM","02:00 PM - 03:00 PM","03:00 PM - 04:00 PM","04:00 PM - 05:00 PM"];
-
-let appointments = [];
-const dateInput = document.getElementById("date");
-const timeSelect = document.getElementById("time");
-const bookingForm = document.getElementById("bookingForm");
-const formFeedback = document.getElementById("formFeedback");
-const yearSpan = document.getElementById("year");
-
-yearSpan.textContent = new Date().getFullYear();
-
-function setMinDateTomorrow() {
-  const t = new Date();
-  t.setDate(t.getDate()+1);
-  const yyyy = t.getFullYear();
-  const mm = String(t.getMonth()+1).padStart(2,'0');
-  const dd = String(t.getDate()).padStart(2,'0');
-  dateInput.min = `${yyyy}-${mm}-${dd}`;
-}
-setMinDateTomorrow();
-
-async function fetchAppointments(){
-  try{
-    const res = await fetch(SHEET_PROXY);
-    appointments = await res.json();
-    updateTimeSlots();
-  } catch(e){
-    console.error("Failed to fetch appointments:", e);
-  }
-}
-
-function updateTimeSlots(){
-  const selectedDate = dateInput.value;
-  timeSelect.innerHTML = '<option value="">Select a time</option>';
-  if(!selectedDate) return;
-  const booked = appointments.filter(a => a.date===selectedDate).map(a=>a.time);
-  DAILY_SLOTS.forEach(slot=>{
-    const opt = document.createElement("option");
-    opt.value=slot;
-    opt.textContent = booked.includes(slot)?`${slot} (BOOKED)`:`${slot} (Available)`;
-    if(booked.includes(slot)) opt.disabled=true;
-    timeSelect.appendChild(opt);
-  });
-}
-
-bookingForm.addEventListener("submit", async e=>{
-  e.preventDefault();
-  formFeedback.textContent="";
-  const name = document.getElementById("name").value.trim();
-  const date = dateInput.value;
-  const time = timeSelect.value;
-  const description = document.getElementById("description").value.trim();
-  if(!name || !date || !time || !description){
-    formFeedback.textContent="Please fill out all fields.";
-    formFeedback.style.color="tomato";
-    return;
-  }
-  try{
-    const res = await fetch(SHEET_PROXY,{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({name,date,time,description})
-    });
-    const json = await res.json();
-    if(json.status==="success"){
-      formFeedback.textContent="Appointment booked! Thank you.";
-      formFeedback.style.color="lightgreen";
-      bookingForm.reset();
-      await fetchAppointments();
-    } else {
-      formFeedback.textContent="Error booking appointment. Try again.";
-      formFeedback.style.color="tomato";
+    // Fetch and display appointments
+    async function loadAppointments() {
+      appointmentsList.innerHTML = "<p>Loading appointments...</p>";
+      try {
+        const res = await fetch(SHEET_API);
+        const text = await res.text(); // since Apps Script returns HTML-wrapped JSON
+        const json = JSON.parse(text.match(/{.*}/s)[0]);
+        if (json.length === 0) {
+          appointmentsList.innerHTML = "<p>No appointments yet — be the first!</p>";
+        } else {
+          appointmentsList.innerHTML = json.map(a => `
+            <div class="p-3 border rounded-lg shadow-sm bg-gray-50">
+              <strong>${a.name}</strong><br>
+              📅 ${a.date} — 🕒 ${a.time}<br>
+              💬 ${a.description}
+            </div>
+          `).join("");
+        }
+      } catch (err) {
+        appointmentsList.innerHTML = `<p class="text-red-600">Error loading appointments.</p>`;
+      }
     }
-  }catch(err){
-    console.error("POST failed", err);
-    formFeedback.textContent="Network error — could not book appointment.";
-    formFeedback.style.color="tomato";
-  }
-});
 
-dateInput.addEventListener("change", updateTimeSlots);
-fetchAppointments();
+    // Handle form submission
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      responseMessage.textContent = "Saving...";
+      const formData = {
+        name: document.getElementById("name").value,
+        date: document.getElementById("date").value,
+        time: document.getElementById("time").value,
+        description: document.getElementById("description").value
+      };
 
-function scrollToBooking(){document.getElementById("bookingCard").scrollIntoView({behavior:"smooth"});}
-</script>
+      try {
+        const res = await fetch(SHEET_API, {
+          method: "POST",
+          body: JSON.stringify(formData)
+        });
+        const text = await res.text();
+        const json = JSON.parse(text.match(/{.*}/s)[0]);
+        if (json.status === "success") {
+          responseMessage.textContent = "✅ Appointment saved successfully!";
+          form.reset();
+          loadAppointments();
+        } else {
+          responseMessage.textContent = "⚠️ " + (json.message || "Error saving appointment.");
+        }
+      } catch (err) {
+        console.error("POST failed:", err);
+        responseMessage.textContent = "❌ Network error — could not book appointment.";
+      }
+    });
 
+    loadAppointments();
+  </script>
 </body>
 </html>
 
