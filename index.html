@@ -88,6 +88,10 @@
       color: #ff914d;
       opacity: 0.9;
     }
+
+    a {
+      text-decoration: none;
+    }
   </style>
 </head>
 
@@ -150,6 +154,32 @@
         <input type="hidden" name="currency_code" value="USD" />
         <button type="submit" class="py-3 px-6">
           Donate
+        </button>
+      </form>
+    </section>
+
+    <!-- Contact & Testimonial Section -->
+    <section class="shadow-xl p-6 bg-dark">
+      <h2 class="text-2xl font-bold mb-4 text-orange-400">📬 Contact & Testimonials</h2>
+      <p class="text-gray-200 mb-4">
+        Questions, concerns, or testimonials? Send me an email or leave a message!
+      </p>
+
+      <!-- Email Button -->
+      <div class="mb-6 text-center">
+        <a href="mailto:blackicerocks82@gmail.com" 
+           class="inline-block py-2 px-6 bg-orange-500 hover:bg-orange-600 text-black font-bold rounded-md transition transform hover:scale-105 shadow-lg">
+          📧 Email Me
+        </a>
+      </div>
+
+      <!-- Testimonial Form -->
+      <form action="mailto:blackicerocks82@gmail.com" method="post" enctype="text/plain" class="space-y-4">
+        <input type="text" name="name" placeholder="Your Name" required class="w-full" />
+        <input type="email" name="email" placeholder="Your Email (optional)" class="w-full" />
+        <textarea name="message" placeholder="Write your testimonial..." class="w-full" required></textarea>
+        <button type="submit" class="w-full py-2 hover:scale-105 transition">
+          📝 Submit Testimonial
         </button>
       </form>
     </section>
