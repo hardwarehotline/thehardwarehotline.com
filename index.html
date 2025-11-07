@@ -278,12 +278,53 @@ bookingForm.addEventListener('submit', async (ev)=>{
   if(!name||!date||!time||!description){ formFeedback.textContent="Please fill out all fields."; formFeedback.style.color="tomato"; return; }
   if(appointments.some(a=>a.date===date&&a.time===time)){ formFeedback.textContent="Sorry — that slot was just booked. Please choose another."; formFeedback.style.color="tomato"; updateTimeSlots(); return; }
   try{
-    const res = await fetch(SHEET_API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name,date,time,description})});
+   
     const json = await res.json();
     if(json && json.status==="success"){ formFeedback.textContent="Appointment booked! Thank you."; formFeedback.style.color="lightgreen"; bookingForm.reset(); setTimeout(()=>openThankModal(),300); await fetchAppointments(); } 
     else{ formFeedback.textContent="There was an error saving your appointment. Please try again."; formFeedback.style.color="tomato"; console.error(json); }
   }catch(err){ console.error(err); formFeedback.textContent="Network error — could not book appointment."; formFeedback.style.color="tomato"; }
 });
+try {
+  const res = await fetch(SHEET_API, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, date, time, description })
+  });
+
+  console.log("Response status:", res.status);
+  console.log("Response headers:", [...res.headers]);
+
+  let text = await res.text(); 
+  console.log("Raw response text:", text);
+
+  let json;
+  try {
+    json = JSON.parse(text);
+    console.log("Parsed JSON:", json);
+  } catch(err) {
+    console.error("JSON parse error:", err);
+    formFeedback.textContent = "Error parsing server response.";
+    formFeedback.style.color = "tomato";
+    return;
+  }
+
+  if(json && json.status === "success"){
+    formFeedback.textContent = "Appointment booked! Thank you.";
+    formFeedback.style.color = "lightgreen";
+    bookingForm.reset();
+    setTimeout(() => openThankModal(), 300);
+    await fetchAppointments();
+  } else {
+    console.error("POST result:", json);
+    formFeedback.textContent = "There was an error saving your appointment. Check console.";
+    formFeedback.style.color = "tomato";
+  }
+
+} catch (err) {
+  console.error("POST failed", err);
+  formFeedback.textContent = "Network error — could not book appointment. See console.";
+  formFeedback.style.color = "tomato";
+}
 
 function promptAdminKey(){
   const key=prompt("Enter admin key to view detailed appointments (ask owner).");
@@ -301,6 +342,7 @@ function scrollToBooking(){ document.getElementById('bookingCard').scrollIntoVie
 </script>
 </body>
 </html>
+
 
 
 
