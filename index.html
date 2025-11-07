@@ -5,78 +5,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Hardware Hotline</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    /* Dark theme with burnt orange accents */
-    body {
-      background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
-      color: #ffa04d;
-    }
-    input, select, textarea {
-      background-color: #2c2c2c;
-      color: #ffa04d;
-      border: 1px solid #ffa04d;
-    }
-    input::placeholder, textarea::placeholder {
-      color: #ffb366;
-    }
-    button {
-      transition: all 0.2s ease;
-    }
-    button:hover {
-      box-shadow: 0 0 10px #ffa04d;
-    }
-    button:active {
-      transform: scale(0.98);
-      box-shadow: 0 0 5px #ffa04d inset;
-    }
-    section {
-      background: #1f1f1f;
-    }
-    h2 {
-      color: #ffa04d;
-    }
-  </style>
 </head>
-<body class="min-h-screen flex flex-col items-center font-sans">
+<body class="bg-gray-900 text-orange-400 min-h-screen flex flex-col items-center">
 
   <!-- Header -->
-  <header class="w-full py-6 text-center shadow-lg" style="background-color: #121212;">
-    <h1 class="text-4xl font-bold mb-2">🛠️ The Hardware Hotline</h1>
-    <p class="text-lg text-orange-400">30 years experience — Free Tech Help & Repairs</p>
+  <header class="bg-gray-800 text-orange-400 w-full py-6 text-center shadow-md">
+    <h1 class="text-3xl font-bold">🛠️ The Hardware Hotline</h1>
+    <p class="text-lg mt-2">Free Tech Help & Repairs — Schedule Your Drop-off!</p>
   </header>
 
   <main class="w-full max-w-3xl p-6 space-y-8">
 
     <!-- Services Section -->
-    <section class="rounded-2xl shadow p-6">
-      <h2 class="text-2xl font-bold mb-4">💡 Free Services We Offer</h2>
-      <ul class="list-disc list-inside space-y-2 text-orange-300">
-        <li>🖥️ Free Desktop & Laptop Diagnostics</li>
-        <li>🦠 Free Virus & Malware Removal</li>
-        <li>💾 Free Data Backup & Recovery Help</li>
-        <li>🧹 Free Computer Cleaning</li>
-        <li>🛠️ Free Computer Build Labor (only pay for parts)</li>
-        <li>🔧 Free Repair Labor</li>
-        <li>⚡ Free Computer Speed Up & Optimizations</li>
+    <section class="bg-gray-800 rounded-2xl shadow p-6">
+      <h2 class="text-2xl font-bold mb-4 text-orange-400">💡 Free Services We Offer</h2>
+      <ul class="list-disc list-inside space-y-2">
+        <li>🔧 Free Desktop & Laptop Diagnostics</li>
+        <li>🖥️ Free Virus & Malware Removal</li>
+        <li>💽 Free Data Backup & Recovery Help</li>
+        <li>⚙️ Free Computer Cleaning</li>
+        <li>🧰 Free Computer Build Labor (only pay for parts)</li>
+        <li>🔩 Free Repair Labor</li>
+        <li>🚀 Free Computer Speed Up & Optimizations</li>
       </ul>
     </section>
 
     <!-- Appointment Form -->
-    <section class="rounded-2xl shadow p-6">
-      <h2 class="text-2xl font-bold mb-4">📅 Schedule a Drop-off Appointment</h2>
+    <section class="bg-gray-800 rounded-2xl shadow p-6">
+      <h2 class="text-2xl font-bold mb-4 text-orange-400">📅 Schedule a Drop-off Appointment</h2>
       <form id="appointmentForm" class="space-y-4">
         <input type="text" id="name" placeholder="Your Name" required
-          class="w-full p-3 rounded-lg" />
-        <input type="date" id="date" required class="w-full p-3 rounded-lg" />
-        <select id="time" required class="w-full p-3 rounded-lg">
+          class="w-full p-2 border border-gray-700 rounded-lg bg-gray-900 text-orange-400" />
+        <input type="date" id="date" required
+          class="w-full p-2 border border-gray-700 rounded-lg bg-gray-900 text-orange-400" />
+        <select id="time" required class="w-full p-2 border border-gray-700 rounded-lg bg-gray-900 text-orange-400">
           <option value="">Select Preferred Time</option>
           <option>Morning (9AM - 11AM)</option>
           <option>Midday (11AM - 2PM)</option>
           <option>Afternoon (2PM - 5PM)</option>
         </select>
-        <textarea id="description" placeholder="Describe your issue..." class="w-full p-3 rounded-lg" required></textarea>
+        <textarea id="description" placeholder="Describe your issue..."
+          class="w-full p-2 border border-gray-700 rounded-lg bg-gray-900 text-orange-400" required></textarea>
         <button type="submit"
-          class="w-full bg-orange-500 text-black font-bold py-3 rounded-lg">
+          class="w-full bg-orange-600 hover:bg-orange-700 text-black font-semibold py-2 rounded-lg transition hover:scale-105">
           💾 Save Appointment Request
         </button>
       </form>
@@ -84,20 +55,22 @@
     </section>
 
     <!-- Appointments View -->
-    <section class="rounded-2xl shadow p-6">
-      <h2 class="text-2xl font-bold mb-4">🔍 Upcoming Appointments</h2>
-      <div id="appointmentsList" class="space-y-3 text-orange-300">
+    <section class="bg-gray-800 rounded-2xl shadow p-6">
+      <h2 class="text-2xl font-bold mb-4 text-orange-400">🔍 Upcoming Appointments</h2>
+      <div id="appointmentsList" class="space-y-3 text-orange-400">
         <p>Loading appointments...</p>
       </div>
     </section>
 
-    <!-- Donate Section -->
-    <section class="rounded-2xl shadow p-6 text-center">
-      <h2 class="text-2xl font-bold mb-4">💖 Support The Hardware Hotline (Optional)</h2>
-      <p class="mb-4">Your donations help keep our free services available!</p>
+    <!-- PayPal Donate Button -->
+    <section class="bg-gray-800 rounded-2xl shadow p-6 text-center">
+      <h2 class="text-2xl font-bold mb-4 text-orange-400">💖 Support The Hardware Hotline</h2>
+      <p class="mb-4">Donations are optional — any contribution helps keep our free services running. 30 years of experience at your service!</p>
+      
       <form action="https://www.paypal.com/donate" method="post" target="_top">
-        <input type="hidden" name="hosted_button_id" value="YOUR_PAYPAL_BUTTON_ID" />
-        <button type="submit" class="bg-orange-500 text-black font-bold py-3 px-6 rounded-lg hover:shadow-lg transition">
+        <input type="hidden" name="business" value="blackicerocks82@gmail.com" />
+        <input type="hidden" name="currency_code" value="USD" />
+        <button type="submit" class="bg-orange-500 text-black font-bold py-3 px-6 rounded-lg hover:shadow-lg hover:scale-105 transition">
           Donate with PayPal
         </button>
       </form>
@@ -105,27 +78,30 @@
 
   </main>
 
-  <footer class="w-full text-center py-4 mt-auto" style="background-color: #121212; color:#ffa04d;">
+  <footer class="bg-gray-800 text-orange-400 w-full text-center py-4 mt-auto">
     <p>© 2025 The Hardware Hotline. All Rights Reserved.</p>
   </footer>
 
   <script>
+    // Replace with your live Google Apps Script URL:
     const SHEET_API = "https://script.google.com/macros/s/AKfycbwz1iUFnyUersgFiuMGCUnCP0STeMsEzI34QHJbQZFARU4IIXRWs6Bqn-FCsCzPmjkPJA/exec";
+
     const form = document.getElementById("appointmentForm");
     const responseMessage = document.getElementById("responseMessage");
     const appointmentsList = document.getElementById("appointmentsList");
 
+    // Fetch and display appointments
     async function loadAppointments() {
       appointmentsList.innerHTML = "<p>Loading appointments...</p>";
       try {
         const res = await fetch(SHEET_API);
-        const text = await res.text();
+        const text = await res.text(); // since Apps Script returns HTML-wrapped JSON
         const json = JSON.parse(text.match(/{.*}/s)[0]);
         if (json.length === 0) {
           appointmentsList.innerHTML = "<p>No appointments yet — be the first!</p>";
         } else {
           appointmentsList.innerHTML = json.map(a => `
-            <div class="p-3 border rounded-lg shadow-sm bg-gray-800 text-orange-200">
+            <div class="p-3 border rounded-lg shadow-sm bg-gray-900 text-orange-400">
               <strong>${a.name}</strong><br>
               📅 ${a.date} — 🕒 ${a.time}<br>
               💬 ${a.description}
@@ -133,10 +109,11 @@
           `).join("");
         }
       } catch (err) {
-        appointmentsList.innerHTML = `<p class="text-red-500">Error loading appointments.</p>`;
+        appointmentsList.innerHTML = `<p class="text-red-600">Error loading appointments.</p>`;
       }
     }
 
+    // Handle form submission
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       responseMessage.textContent = "Saving...";
@@ -169,6 +146,5 @@
 
     loadAppointments();
   </script>
-
 </body>
 </html>
